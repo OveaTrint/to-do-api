@@ -1,12 +1,17 @@
+from django.contrib.auth.password_validation import validate_password
 from rest_framework import serializers
 
 from .models import CustomUser
 
 
 class UserRegisterSerializer(serializers.ModelSerializer):
-    class Meta:
+    class Meta:  # pyright: ignore[reportIncompatibleVariableOverride]
         model = CustomUser
         fields = ["username", "email", "password"]
+
+    def validate_password(self, unhashed_pw):
+        validate_password(unhashed_pw)
+        return unhashed_pw
 
     def create(self, validated_data):
         user = CustomUser(
@@ -17,9 +22,3 @@ class UserRegisterSerializer(serializers.ModelSerializer):
         user.save()
 
         return user
-
-
-class UserLoginSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = CustomUser
-        fields = ["email", "password"]

@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "rest_framework",
     "users",
+    "todo_item",
 ]
 
 MIDDLEWARE = [
@@ -130,5 +131,8 @@ STATIC_URL = "static/"
 # Rest framework
 
 REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework_simplejwt.authentication.JWTAuthentication"
+    ],
     "TEST_REQUEST_DEFAULT_FORMAT": "json",
 }

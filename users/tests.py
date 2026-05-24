@@ -2,7 +2,7 @@ from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
 
-from utils.jwt import get_jwt
+from users.models import CustomUser
 
 # Create your tests here.
 
@@ -25,7 +25,7 @@ class UserAPITestCase(APITestCase):
 
     def test_create_account(self):
         """
-        Ensure we can create an account
+        Ensures we can create an account
         """
         # Data passed for registration
         data = {
@@ -36,16 +36,13 @@ class UserAPITestCase(APITestCase):
 
         response = self.client.post(UserAPITestCase.register_url, data)
 
-        # payload for jwt token w/o username and password
-        data.pop("password")
-        data.pop("username")
-
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertEqual(response.json(), {"token": get_jwt(data)})
+        self.assertEqual(CustomUser.objects.count(), 2)
+        self.assertIsNotNone(CustomUser.objects.get(email=data["email"]))
 
     def test_unique_email_constraint(self):
         """
-        Test whether unique email constraint holds
+        Tests whether the unique email constraint holds
         """
         data = {
             "username": "Kamal101",
@@ -63,15 +60,18 @@ class UserAPITestCase(APITestCase):
                 "detail": {"email": ["user with this email already exists."]},
             },
         )
+        with self.assertRaises(CustomUser.DoesNotExist):
+            CustomUser.objects.get(username=data["username"])
 
     def test_valid_login(self):
         data = {"email": "kbaiyewu@gmail.com", "password": "Ilovemymom101"}
         response = self.client.post(UserAPITestCase.login_url, data=data)
 
-        data.pop("password")
-
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.json(), {"token": get_jwt(data)})
+
+        # checks if response contains access and refresh tokens
+        self.assertTrue("access" in response.json())
+        self.assertTrue("refresh" in response.json())
 
     def test_login_with_invalid_email(self):
         data = {"email": "kbiyewu@gmail.com", "password": "Ilovemymom101"}
@@ -83,6 +83,10 @@ class UserAPITestCase(APITestCase):
             {"status": "error", "detail": "User not found, please register first."},
         )
 
+        # checks if access and refresh tokens are not in the response
+        self.assertTrue("access" not in response.json())
+        self.assertTrue("access" not in response.json())
+
     def test_login_with_invalid_password(self):
         data = {"email": "kbaiyewu@gmail.com", "password": "ilovemymom10"}
         response = self.client.post(UserAPITestCase.login_url, data=data)
@@ -92,3 +96,5 @@ class UserAPITestCase(APITestCase):
             response.json(),
             {"status": "error", "detail": "Invalid password, please try again."},
         )
+        self.assertTrue("access" not in response.json())
+        self.assertTrue("refresh" not in response.json())

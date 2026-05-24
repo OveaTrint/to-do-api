@@ -1,10 +1,11 @@
+from django.db import transaction
 from rest_framework import status
 from rest_framework.decorators import api_view
-from rest_framework.views import Response
+from rest_framework.response import Response
 
 from users.models import CustomUser
 from users.serializers import UserRegisterSerializer
-from utils.jwt import get_jwt
+from users.services import get_access_and_refresh_token
 
 # Create your views here.
 
@@ -14,13 +15,22 @@ def register_user(request):
     serializer = UserRegisterSerializer(data=request.data)
 
     if serializer.is_valid():
-        serializer.save()
+        # to prevent user from being saved if a response isn't sent to the client
+        try:
+            with transaction.atomic():
+                user = serializer.save()
 
-        # generate jwt token with user email as payload
-        jwt_payload = {"email": serializer.validated_data["email"]}
-        jwt = get_jwt(jwt_payload)
-
-        return Response({"token": jwt}, status=status.HTTP_201_CREATED)
+                return Response(
+                    get_access_and_refresh_token(user), status=status.HTTP_201_CREATED
+                )
+        except Exception as e:
+            return Response(
+                {
+                    "status": "error",
+                    "detail": "Failed to register user",
+                    "reason": str(e),
+                }
+            )
 
     return Response(
         data={"status": "error", "detail": serializer.errors},
@@ -36,9 +46,9 @@ def login_user(request):
     try:
         user = CustomUser.objects.get(email=supplied_email)
         if user.check_password(supplied_password):
-            jwt_payload = {"email": supplied_email}
-            return Response({"token": get_jwt(jwt_payload)}, status.HTTP_200_OK)
-
+            return Response(
+                get_access_and_refresh_token(user), status=status.HTTP_200_OK
+            )
         else:
             return Response(
                 {"status": "error", "detail": "Invalid password, please try again."},
