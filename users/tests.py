@@ -64,6 +64,9 @@ class UserAPITestCase(APITestCase):
             CustomUser.objects.get(username=data["username"])
 
     def test_valid_login(self):
+        """
+        Test whether API authenticates user when valid login credentials are provided
+        """
         data = {"email": "kbaiyewu@gmail.com", "password": "Ilovemymom101"}
         response = self.client.post(UserAPITestCase.login_url, data=data)
 
@@ -74,6 +77,9 @@ class UserAPITestCase(APITestCase):
         self.assertTrue("refresh" in response.json())
 
     def test_login_with_invalid_email(self):
+        """
+        Test whether API returns an error user when valid login credentials are provided
+        """
         data = {"email": "kbiyewu@gmail.com", "password": "Ilovemymom101"}
         response = self.client.post(UserAPITestCase.login_url, data=data)
 
@@ -88,6 +94,9 @@ class UserAPITestCase(APITestCase):
         self.assertTrue("access" not in response.json())
 
     def test_login_with_invalid_password(self):
+        """
+        Test whether server authenticates user when valid login credentials are provided
+        """
         data = {"email": "kbaiyewu@gmail.com", "password": "ilovemymom10"}
         response = self.client.post(UserAPITestCase.login_url, data=data)
 
