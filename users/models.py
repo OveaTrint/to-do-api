@@ -7,5 +7,6 @@ from django.db import models
 class CustomUser(AbstractUser):
     email = models.EmailField(unique=True)
 
+    # makes email be used as the identifier for auth
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["username"]

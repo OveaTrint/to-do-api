@@ -78,7 +78,7 @@ class UserAPITestCase(APITestCase):
 
     def test_login_with_invalid_email(self):
         """
-        Test whether API returns an error user when valid login credentials are provided
+        Test whether API returns an error user when an invalid email is provided
         """
         data = {"email": "kbiyewu@gmail.com", "password": "Ilovemymom101"}
         response = self.client.post(UserAPITestCase.login_url, data=data)
@@ -95,7 +95,7 @@ class UserAPITestCase(APITestCase):
 
     def test_login_with_invalid_password(self):
         """
-        Test whether server authenticates user when valid login credentials are provided
+        Test whether server authenticates user when an invalid password is provided
         """
         data = {"email": "kbaiyewu@gmail.com", "password": "ilovemymom10"}
         response = self.client.post(UserAPITestCase.login_url, data=data)

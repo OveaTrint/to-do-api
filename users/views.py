@@ -1,4 +1,3 @@
-from django.db import transaction
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -15,25 +14,13 @@ def register_user(request):
     serializer = UserRegisterSerializer(data=request.data)
 
     if serializer.is_valid():
-        # to prevent user from being saved if a response isn't sent to the client
-        try:
-            with transaction.atomic():
-                user = serializer.save()
+        user = serializer.save()
 
-                return Response(
-                    get_access_and_refresh_token(user), status=status.HTTP_201_CREATED
-                )
-        except Exception as e:
-            return Response(
-                {
-                    "status": "error",
-                    "detail": "Failed to register user",
-                    "reason": str(e),
-                }
-            )
-
+        return Response(
+            get_access_and_refresh_token(user), status=status.HTTP_201_CREATED
+        )
     return Response(
-        data={"status": "error", "detail": serializer.errors},
+        data={"detail": serializer.errors},
         status=status.HTTP_400_BAD_REQUEST,
     )
 
@@ -51,11 +38,11 @@ def login_user(request):
             )
         else:
             return Response(
-                {"status": "error", "detail": "Invalid password, please try again."},
+                {"detail": "Invalid password, please try again."},
                 status=status.HTTP_401_UNAUTHORIZED,
             )
     except CustomUser.DoesNotExist:
         return Response(
-            {"status": "error", "detail": "User not found, please register first."},
+            {"detail": "User not found, please register first."},
             status.HTTP_404_NOT_FOUND,
         )
