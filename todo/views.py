@@ -88,5 +88,5 @@ class ToDoViewSet(viewsets.ModelViewSet):
         except ToDo.DoesNotExist:
             return Response(
                 {"detail": "The requested resource does not exist"},
-                status.HTTP_400_BAD_REQUEST,
+                status.HTTP_404_NOT_FOUND,
             )
