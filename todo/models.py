@@ -15,7 +15,7 @@ def check_empty_title_or_description(value):
 
 
 # Create your models here.
-class ToDoItem(models.Model):
+class ToDo(models.Model):
     title = models.CharField(max_length=50)
     description = models.CharField(max_length=100)
     owner = models.ForeignKey(

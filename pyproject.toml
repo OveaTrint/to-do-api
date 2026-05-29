@@ -1,5 +1,5 @@
 [project]
-name = "todo-api"
+name = "todos-api"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
@@ -11,8 +11,6 @@ dependencies = [
     "djangorestframework>=3.17.1",
     "djangorestframework-simplejwt>=5.5.1",
     "djangorestframework-stubs>=3.17.0",
-    "httpie>=3.2.4",
-    "joserfc>=1.6.5",
     "psycopg[binary]>=3.3.4",
     "python-dotenv>=1.2.2",
 ]

@@ -1,5 +1,6 @@
 from rest_framework import status
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
 from users.models import CustomUser
@@ -10,6 +11,7 @@ from users.services import get_access_and_refresh_token
 
 
 @api_view(["POST"])
+@permission_classes([AllowAny])
 def register_user(request):
     serializer = UserRegisterSerializer(data=request.data)
 
@@ -26,6 +28,7 @@ def register_user(request):
 
 
 @api_view(["POST"])
+@permission_classes([AllowAny])
 def login_user(request):
     supplied_email = request.data["email"]
     supplied_password = request.data["password"]

@@ -1,9 +1,9 @@
 from rest_framework import serializers
 
-from .models import ToDoItem
+from .models import ToDo
 
 
-class ToDoItemSerializer(serializers.ModelSerializer):
+class ToDoSerializer(serializers.ModelSerializer):
     class Meta:  # pyright: ignore[reportIncompatibleVariableOverride]
-        model = ToDoItem
+        model = ToDo
         fields = ["id", "title", "description"]

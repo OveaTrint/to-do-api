@@ -56,7 +56,6 @@ class UserAPITestCase(APITestCase):
         self.assertEqual(
             response.json(),
             {
-                "status": "error",
                 "detail": {"email": ["user with this email already exists."]},
             },
         )
@@ -86,7 +85,7 @@ class UserAPITestCase(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
         self.assertEqual(
             response.json(),
-            {"status": "error", "detail": "User not found, please register first."},
+            {"detail": "User not found, please register first."},
         )
 
         # checks if access and refresh tokens are not in the response
@@ -103,7 +102,7 @@ class UserAPITestCase(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
         self.assertEqual(
             response.json(),
-            {"status": "error", "detail": "Invalid password, please try again."},
+            {"detail": "Invalid password, please try again."},
         )
         self.assertTrue("access" not in response.json())
         self.assertTrue("refresh" not in response.json())
