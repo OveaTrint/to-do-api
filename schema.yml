@@ -1,0 +1,484 @@
+openapi: 3.0.3
+info:
+  title: ''
+  version: 0.0.0
+paths:
+  /api/schema/:
+    get:
+      operationId: api_schema_retrieve
+      description: |-
+        OpenApi3 schema for this API. Format can be selected via content negotiation.
+
+        - YAML: application/vnd.oai.openapi
+        - JSON: application/vnd.oai.openapi+json
+      parameters:
+      - in: query
+        name: format
+        schema:
+          type: string
+          enum:
+          - json
+          - yaml
+      - in: query
+        name: lang
+        schema:
+          type: string
+          enum:
+          - af
+          - ar
+          - ar-dz
+          - ast
+          - az
+          - be
+          - bg
+          - bn
+          - br
+          - bs
+          - ca
+          - ckb
+          - cs
+          - cy
+          - da
+          - de
+          - dsb
+          - el
+          - en
+          - en-au
+          - en-gb
+          - eo
+          - es
+          - es-ar
+          - es-co
+          - es-mx
+          - es-ni
+          - es-ve
+          - et
+          - eu
+          - fa
+          - fi
+          - fr
+          - fy
+          - ga
+          - gd
+          - gl
+          - he
+          - hi
+          - hr
+          - hsb
+          - ht
+          - hu
+          - hy
+          - ia
+          - id
+          - ig
+          - io
+          - is
+          - it
+          - ja
+          - ka
+          - kab
+          - kk
+          - km
+          - kn
+          - ko
+          - ky
+          - lb
+          - lt
+          - lv
+          - mk
+          - ml
+          - mn
+          - mr
+          - ms
+          - my
+          - nb
+          - ne
+          - nl
+          - nn
+          - os
+          - pa
+          - pl
+          - pt
+          - pt-br
+          - ro
+          - ru
+          - sk
+          - sl
+          - sq
+          - sr
+          - sr-latn
+          - sv
+          - sw
+          - ta
+          - te
+          - tg
+          - th
+          - tk
+          - tr
+          - tt
+          - udm
+          - ug
+          - uk
+          - ur
+          - uz
+          - vi
+          - zh-hans
+          - zh-hant
+      tags:
+      - api
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/vnd.oai.openapi:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/yaml:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/vnd.oai.openapi+json:
+              schema:
+                type: object
+                additionalProperties: {}
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+  /api/token/refresh/:
+    post:
+      operationId: api_token_refresh_create
+      description: |-
+        Takes a refresh type JSON web token and returns an access type JSON web
+        token if the refresh token is valid.
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenRefresh'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TokenRefresh'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TokenRefresh'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenRefresh'
+          description: ''
+  /todos:
+    get:
+      operationId: todos_list
+      description: |-
+        Groups all the views using a Viewset since they all the HTTP methods use the same path.
+        The GET method to retrieve all Todos is implemented automatically by the viewset's list() method
+      parameters:
+      - name: limit
+        required: false
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: The initial index from which to return the results.
+        schema:
+          type: integer
+      tags:
+      - todos
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedToDoList'
+          description: ''
+    post:
+      operationId: todos_create
+      description: |-
+        Groups all the views using a Viewset since they all the HTTP methods use the same path.
+        The GET method to retrieve all Todos is implemented automatically by the viewset's list() method
+      tags:
+      - todos
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ToDo'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ToDo'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ToDo'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ToDo'
+          description: ''
+  /todos/{id}:
+    get:
+      operationId: todos_retrieve
+      description: |-
+        Groups all the views using a Viewset since they all the HTTP methods use the same path.
+        The GET method to retrieve all Todos is implemented automatically by the viewset's list() method
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this to do.
+        required: true
+      tags:
+      - todos
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ToDo'
+          description: ''
+    put:
+      operationId: todos_update
+      description: |-
+        Groups all the views using a Viewset since they all the HTTP methods use the same path.
+        The GET method to retrieve all Todos is implemented automatically by the viewset's list() method
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this to do.
+        required: true
+      tags:
+      - todos
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ToDo'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ToDo'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ToDo'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ToDo'
+          description: ''
+    patch:
+      operationId: todos_partial_update
+      description: |-
+        Groups all the views using a Viewset since they all the HTTP methods use the same path.
+        The GET method to retrieve all Todos is implemented automatically by the viewset's list() method
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this to do.
+        required: true
+      tags:
+      - todos
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedToDo'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedToDo'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedToDo'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ToDo'
+          description: ''
+    delete:
+      operationId: todos_destroy
+      description: |-
+        Groups all the views using a Viewset since they all the HTTP methods use the same path.
+        The GET method to retrieve all Todos is implemented automatically by the viewset's list() method
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this to do.
+        required: true
+      tags:
+      - todos
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /users/login/:
+    post:
+      operationId: users_login_create
+      tags:
+      - users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRegister'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/UserRegister'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UserRegister'
+        required: true
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          description: No response body
+  /users/register/:
+    post:
+      operationId: users_register_create
+      tags:
+      - users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRegister'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/UserRegister'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UserRegister'
+        required: true
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          description: No response body
+components:
+  schemas:
+    PaginatedToDoList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=400&limit=100
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=200&limit=100
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/ToDo'
+    PatchedToDo:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          maxLength: 50
+        description:
+          type: string
+          maxLength: 100
+    ToDo:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          maxLength: 50
+        description:
+          type: string
+          maxLength: 100
+      required:
+      - description
+      - id
+      - title
+    TokenRefresh:
+      type: object
+      properties:
+        access:
+          type: string
+          readOnly: true
+        refresh:
+          type: string
+          writeOnly: true
+      required:
+      - access
+      - refresh
+    UserRegister:
+      type: object
+      properties:
+        username:
+          type: string
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+            only.
+          pattern: ^[\w.@+-]+$
+          maxLength: 150
+        email:
+          type: string
+          format: email
+          maxLength: 254
+        password:
+          type: string
+          maxLength: 128
+      required:
+      - email
+      - password
+      - username
+  securitySchemes:
+    jwtAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
