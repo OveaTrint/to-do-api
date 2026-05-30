@@ -19,14 +19,14 @@ def register_user(request):
 
     if serializer.is_valid():
         user = serializer.save()
-
         return Response(
             get_access_and_refresh_token(user), status=status.HTTP_201_CREATED
         )
-    return Response(
-        data={"detail": serializer.errors},
-        status=status.HTTP_409_CONFLICT,
-    )
+    else:
+        return Response(
+            data={"detail": serializer.errors},
+            status=status.HTTP_400_BAD_REQUEST,
+        )
 
 
 @extend_schema(request=UserSerializer)  # for swagger docs

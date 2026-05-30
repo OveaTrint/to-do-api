@@ -15,6 +15,7 @@ class ToDoViewSet(viewsets.ModelViewSet):
 
     serializer_class = ToDoSerializer
     queryset = ToDo.objects.all()
+    http_method_names = ["get", "post", "put", "delete"]
 
     def create(self, request):
         serializer = ToDoSerializer(data=request.data)
