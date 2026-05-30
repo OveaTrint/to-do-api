@@ -1,4 +1,3 @@
-from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models import Q
 from django.db.models.constraints import CheckConstraint
@@ -7,11 +6,6 @@ from django.db.models.functions import Length
 from users.models import CustomUser
 
 models.CharField.register_lookup(Length)
-
-
-def check_empty_title_or_description(value):
-    if len(value) == 0:
-        raise ValidationError("Title or description fields must not be empty")
 
 
 # Create your models here.

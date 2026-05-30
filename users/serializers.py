@@ -5,7 +5,7 @@ from .models import CustomUser
 
 
 class UserRegisterSerializer(serializers.ModelSerializer):
-    class Meta:  # pyright: ignore[reportIncompatibleVariableOverride]
+    class Meta:
         model = CustomUser
         fields = ["username", "email", "password"]
 
