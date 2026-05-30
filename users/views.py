@@ -29,7 +29,7 @@ def register_user(request):
     )
 
 
-@extend_schema(request=UserSerializer)
+@extend_schema(request=UserSerializer)  # for swagger docs
 @api_view(["POST"])
 @permission_classes([AllowAny])
 def login_user(request):
