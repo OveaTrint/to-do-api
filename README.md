@@ -1,7 +1,6 @@
 # ToDo API Project
-A project inspired by [roadmap.sh](rhttps://roadmap.sh/projects/todo-list-api) that creates a RESTful API that allows **authenticated** users to create and manage their ToDo lists and items.
 
-A project inspired by [roadmap.sh](rhttps://roadmap.sh/projects/todo-list-api) that creates a RESTful API that allows *
+A project inspired by [roadmap.sh](https://roadmap.sh/projects/todo-list-api) that creates a RESTful API that allows *
 *authenticated** users to create and manage their ToDo lists and items.
 
 It was created using django and django-rest-framework (DRF)
@@ -23,6 +22,7 @@ It was created using django and django-rest-framework (DRF)
 ```
 
 3. Make sure you have set your secret and database credentials in an `.env` file
+
 ```env
 SECRET_KEY="YOUR SECRET KEY"
 DATABSE_PW="YOUR_PW"
