@@ -1,5 +1,5 @@
 # ToDo API Project
-A project inspired by [roadmap.sh](rhttps://roadmap.sh/projects/todo-list-api) that creates a RESTful API that allows **authenticated** users to create and manage their ToDo lists and items.
+A project inspired by [roadmap.sh](https://roadmap.sh/projects/todo-list-api) that creates a RESTful API that allows **authenticated** users to create and manage their ToDo lists and items.
 
 
 It was creates using django and django-rest-framework (DRF)
