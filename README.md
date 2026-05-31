@@ -17,7 +17,7 @@ It was creates using django and django-rest-framework (DRF)
   source .venv/Scripts/activate
 ```
 
-3. Make sure you have set your secret and database credentials in an `.env` file
+3. Make sure you have set your secret key and database credentials in an `.env` file
 ```env
 SECRET_KEY="YOUR SECRET KEY"
 DATABSE_PW="YOUR_PW"
