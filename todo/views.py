@@ -8,14 +8,20 @@ from .serializer import ToDoSerializer
 
 
 class ToDoViewSet(viewsets.ModelViewSet):
-    """
-    Groups all the views using a Viewset since they all the HTTP methods use the same path.
-    The GET method to retrieve all Todos is implemented automatically by the viewset's list() method
-    """
-
     serializer_class = ToDoSerializer
     queryset = ToDo.objects.all()
     http_method_names = ["get", "post", "put", "delete"]
+
+    def list(self, request):
+        queryset = ToDo.objects.filter(owner=request.user)
+        page = self.paginate_queryset(queryset)
+
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
 
     def create(self, request):
         serializer = ToDoSerializer(data=request.data)
@@ -23,8 +29,8 @@ class ToDoViewSet(viewsets.ModelViewSet):
         if serializer.is_valid():
             serializer.save(owner=request.user)
             return Response(serializer.data, status.HTTP_201_CREATED)
-        else:
-            return Response(serializer.errors, status.HTTP_400_BAD_REQUEST)
+
+        return Response(serializer.errors, status.HTTP_400_BAD_REQUEST)
 
     def update(self, request, pk: int):
         try:
@@ -35,8 +41,8 @@ class ToDoViewSet(viewsets.ModelViewSet):
             if serializer.is_valid():
                 serializer.save()
                 return Response(serializer.data, status.HTTP_200_OK)
-            else:
-                return Response(serializer.errors, status.HTTP_400_BAD_REQUEST)
+
+            return Response(serializer.errors, status.HTTP_400_BAD_REQUEST)
         except ToDo.DoesNotExist:
             return Response(
                 {"detail": "The requested resource does not exist"},

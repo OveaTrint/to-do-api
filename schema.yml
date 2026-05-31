@@ -1,6 +1,6 @@
 openapi: 3.0.3
 info:
-  title: ''
+  title: "ToDo API"
   version: 0.0.0
 paths:
   /api/schema/:
@@ -12,125 +12,125 @@ paths:
         - YAML: application/vnd.oai.openapi
         - JSON: application/vnd.oai.openapi+json
       parameters:
-      - in: query
-        name: format
-        schema:
-          type: string
-          enum:
-          - json
-          - yaml
-      - in: query
-        name: lang
-        schema:
-          type: string
-          enum:
-          - af
-          - ar
-          - ar-dz
-          - ast
-          - az
-          - be
-          - bg
-          - bn
-          - br
-          - bs
-          - ca
-          - ckb
-          - cs
-          - cy
-          - da
-          - de
-          - dsb
-          - el
-          - en
-          - en-au
-          - en-gb
-          - eo
-          - es
-          - es-ar
-          - es-co
-          - es-mx
-          - es-ni
-          - es-ve
-          - et
-          - eu
-          - fa
-          - fi
-          - fr
-          - fy
-          - ga
-          - gd
-          - gl
-          - he
-          - hi
-          - hr
-          - hsb
-          - ht
-          - hu
-          - hy
-          - ia
-          - id
-          - ig
-          - io
-          - is
-          - it
-          - ja
-          - ka
-          - kab
-          - kk
-          - km
-          - kn
-          - ko
-          - ky
-          - lb
-          - lt
-          - lv
-          - mk
-          - ml
-          - mn
-          - mr
-          - ms
-          - my
-          - nb
-          - ne
-          - nl
-          - nn
-          - os
-          - pa
-          - pl
-          - pt
-          - pt-br
-          - ro
-          - ru
-          - sk
-          - sl
-          - sq
-          - sr
-          - sr-latn
-          - sv
-          - sw
-          - ta
-          - te
-          - tg
-          - th
-          - tk
-          - tr
-          - tt
-          - udm
-          - ug
-          - uk
-          - ur
-          - uz
-          - vi
-          - zh-hans
-          - zh-hant
+        - in: query
+          name: format
+          schema:
+            type: string
+            enum:
+              - json
+              - yaml
+        - in: query
+          name: lang
+          schema:
+            type: string
+            enum:
+              - af
+              - ar
+              - ar-dz
+              - ast
+              - az
+              - be
+              - bg
+              - bn
+              - br
+              - bs
+              - ca
+              - ckb
+              - cs
+              - cy
+              - da
+              - de
+              - dsb
+              - el
+              - en
+              - en-au
+              - en-gb
+              - eo
+              - es
+              - es-ar
+              - es-co
+              - es-mx
+              - es-ni
+              - es-ve
+              - et
+              - eu
+              - fa
+              - fi
+              - fr
+              - fy
+              - ga
+              - gd
+              - gl
+              - he
+              - hi
+              - hr
+              - hsb
+              - ht
+              - hu
+              - hy
+              - ia
+              - id
+              - ig
+              - io
+              - is
+              - it
+              - ja
+              - ka
+              - kab
+              - kk
+              - km
+              - kn
+              - ko
+              - ky
+              - lb
+              - lt
+              - lv
+              - mk
+              - ml
+              - mn
+              - mr
+              - ms
+              - my
+              - nb
+              - ne
+              - nl
+              - nn
+              - os
+              - pa
+              - pl
+              - pt
+              - pt-br
+              - ro
+              - ru
+              - sk
+              - sl
+              - sq
+              - sr
+              - sr-latn
+              - sv
+              - sw
+              - ta
+              - te
+              - tg
+              - th
+              - tk
+              - tr
+              - tt
+              - udm
+              - ug
+              - uk
+              - ur
+              - uz
+              - vi
+              - zh-hans
+              - zh-hant
       tags:
-      - api
+        - api
       security:
-      - jwtAuth: []
-      - {}
+        - jwtAuth: []
+        - {}
       responses:
-        '200':
+        "200":
           content:
             application/vnd.oai.openapi:
               schema:
@@ -148,7 +148,7 @@ paths:
               schema:
                 type: object
                 additionalProperties: {}
-          description: ''
+          description: ""
   /api/token/refresh/:
     post:
       operationId: api_token_refresh_create
@@ -156,26 +156,26 @@ paths:
         Takes a refresh type JSON web token and returns an access type JSON web
         token if the refresh token is valid.
       tags:
-      - api
+        - api
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/TokenRefresh'
+              $ref: "#/components/schemas/TokenRefresh"
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/TokenRefresh'
+              $ref: "#/components/schemas/TokenRefresh"
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/TokenRefresh'
+              $ref: "#/components/schemas/TokenRefresh"
         required: true
       responses:
-        '200':
+        "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TokenRefresh'
-          description: ''
+                $ref: "#/components/schemas/TokenRefresh"
+          description: ""
   /todos:
     get:
       operationId: todos_list
@@ -183,57 +183,57 @@ paths:
         Groups all the views using a Viewset since they all the HTTP methods use the same path.
         The GET method to retrieve all Todos is implemented automatically by the viewset's list() method
       parameters:
-      - name: limit
-        required: false
-        in: query
-        description: Number of results to return per page.
-        schema:
-          type: integer
-      - name: offset
-        required: false
-        in: query
-        description: The initial index from which to return the results.
-        schema:
-          type: integer
+        - name: limit
+          required: false
+          in: query
+          description: Number of results to return per page.
+          schema:
+            type: integer
+        - name: offset
+          required: false
+          in: query
+          description: The initial index from which to return the results.
+          schema:
+            type: integer
       tags:
-      - todos
+        - todos
       security:
-      - jwtAuth: []
+        - jwtAuth: []
       responses:
-        '200':
+        "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PaginatedToDoList'
-          description: ''
+                $ref: "#/components/schemas/PaginatedToDoList"
+          description: ""
     post:
       operationId: todos_create
       description: |-
         Groups all the views using a Viewset since they all the HTTP methods use the same path.
         The GET method to retrieve all Todos is implemented automatically by the viewset's list() method
       tags:
-      - todos
+        - todos
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ToDo'
+              $ref: "#/components/schemas/ToDo"
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/ToDo'
+              $ref: "#/components/schemas/ToDo"
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/ToDo'
+              $ref: "#/components/schemas/ToDo"
         required: true
       security:
-      - jwtAuth: []
+        - jwtAuth: []
       responses:
-        '201':
+        "201":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ToDo'
-          description: ''
+                $ref: "#/components/schemas/ToDo"
+          description: ""
   /todos/{id}:
     get:
       operationId: todos_retrieve
@@ -241,164 +241,164 @@ paths:
         Groups all the views using a Viewset since they all the HTTP methods use the same path.
         The GET method to retrieve all Todos is implemented automatically by the viewset's list() method
       parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this to do.
-        required: true
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: A unique integer value identifying this to do.
+          required: true
       tags:
-      - todos
+        - todos
       security:
-      - jwtAuth: []
+        - jwtAuth: []
       responses:
-        '200':
+        "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ToDo'
-          description: ''
+                $ref: "#/components/schemas/ToDo"
+          description: ""
     put:
       operationId: todos_update
       description: |-
         Groups all the views using a Viewset since they all the HTTP methods use the same path.
         The GET method to retrieve all Todos is implemented automatically by the viewset's list() method
       parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this to do.
-        required: true
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: A unique integer value identifying this to do.
+          required: true
       tags:
-      - todos
+        - todos
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ToDo'
+              $ref: "#/components/schemas/ToDo"
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/ToDo'
+              $ref: "#/components/schemas/ToDo"
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/ToDo'
+              $ref: "#/components/schemas/ToDo"
         required: true
       security:
-      - jwtAuth: []
+        - jwtAuth: []
       responses:
-        '200':
+        "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ToDo'
-          description: ''
+                $ref: "#/components/schemas/ToDo"
+          description: ""
     patch:
       operationId: todos_partial_update
       description: |-
         Groups all the views using a Viewset since they all the HTTP methods use the same path.
         The GET method to retrieve all Todos is implemented automatically by the viewset's list() method
       parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this to do.
-        required: true
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: A unique integer value identifying this to do.
+          required: true
       tags:
-      - todos
+        - todos
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PatchedToDo'
+              $ref: "#/components/schemas/PatchedToDo"
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/PatchedToDo'
+              $ref: "#/components/schemas/PatchedToDo"
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/PatchedToDo'
+              $ref: "#/components/schemas/PatchedToDo"
       security:
-      - jwtAuth: []
+        - jwtAuth: []
       responses:
-        '200':
+        "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ToDo'
-          description: ''
+                $ref: "#/components/schemas/ToDo"
+          description: ""
     delete:
       operationId: todos_destroy
       description: |-
         Groups all the views using a Viewset since they all the HTTP methods use the same path.
         The GET method to retrieve all Todos is implemented automatically by the viewset's list() method
       parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: A unique integer value identifying this to do.
-        required: true
+        - in: path
+          name: id
+          schema:
+            type: integer
+          description: A unique integer value identifying this to do.
+          required: true
       tags:
-      - todos
+        - todos
       security:
-      - jwtAuth: []
+        - jwtAuth: []
       responses:
-        '204':
+        "204":
           description: No response body
   /users/login/:
     post:
       operationId: users_login_create
       tags:
-      - users
+        - users
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UserRegister'
+              $ref: "#/components/schemas/UserRegister"
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/UserRegister'
+              $ref: "#/components/schemas/UserRegister"
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/UserRegister'
+              $ref: "#/components/schemas/UserRegister"
         required: true
       security:
-      - jwtAuth: []
-      - {}
+        - jwtAuth: []
+        - {}
       responses:
-        '200':
+        "200":
           description: No response body
   /users/register/:
     post:
       operationId: users_register_create
       tags:
-      - users
+        - users
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UserRegister'
+              $ref: "#/components/schemas/UserRegister"
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/UserRegister'
+              $ref: "#/components/schemas/UserRegister"
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/UserRegister'
+              $ref: "#/components/schemas/UserRegister"
         required: true
       security:
-      - jwtAuth: []
-      - {}
+        - jwtAuth: []
+        - {}
       responses:
-        '200':
+        "200":
           description: No response body
 components:
   schemas:
     PaginatedToDoList:
       type: object
       required:
-      - count
-      - results
+        - count
+        - results
       properties:
         count:
           type: integer
@@ -416,7 +416,7 @@ components:
         results:
           type: array
           items:
-            $ref: '#/components/schemas/ToDo'
+            $ref: "#/components/schemas/ToDo"
     PatchedToDo:
       type: object
       properties:
@@ -442,9 +442,9 @@ components:
           type: string
           maxLength: 100
       required:
-      - description
-      - id
-      - title
+        - description
+        - id
+        - title
     TokenRefresh:
       type: object
       properties:
@@ -455,14 +455,15 @@ components:
           type: string
           writeOnly: true
       required:
-      - access
-      - refresh
+        - access
+        - refresh
     UserRegister:
       type: object
       properties:
         username:
           type: string
-          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+          description:
+            Required. 150 characters or fewer. Letters, digits and @/./+/-/_
             only.
           pattern: ^[\w.@+-]+$
           maxLength: 150
@@ -474,9 +475,9 @@ components:
           type: string
           maxLength: 128
       required:
-      - email
-      - password
-      - username
+        - email
+        - password
+        - username
   securitySchemes:
     jwtAuth:
       type: http

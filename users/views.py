@@ -17,16 +17,9 @@ from users.services import get_access_and_refresh_token
 def register_user(request):
     serializer = UserSerializer(data=request.data)
 
-    if serializer.is_valid():
-        user = serializer.save()
-        return Response(
-            get_access_and_refresh_token(user), status=status.HTTP_201_CREATED
-        )
-    else:
-        return Response(
-            data={"detail": serializer.errors},
-            status=status.HTTP_400_BAD_REQUEST,
-        )
+    serializer.is_valid(raise_exception=True)
+    user = serializer.save()
+    return Response(get_access_and_refresh_token(user), status=status.HTTP_201_CREATED)
 
 
 @extend_schema(request=UserSerializer)  # for swagger docs
