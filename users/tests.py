@@ -64,7 +64,7 @@ class UserAPITestCase(APITestCase):
 
     def test_valid_login(self):
         """
-        Test whether API authenticates user when valid login credentials are provided
+        Test whether the server authenticates a user when valid login credentials are provided
         """
         data = {"email": "kbaiyewu@gmail.com", "password": "Ilovemymom101"}
         response = self.client.post(UserAPITestCase.login_url, data=data)
@@ -75,9 +75,9 @@ class UserAPITestCase(APITestCase):
         self.assertTrue("access" in response.json())
         self.assertTrue("refresh" in response.json())
 
-    def test_login_with_invalid_email(self):
+    def test_login_with_email_that_is_nonexistent(self):
         """
-        Test whether API returns an error user when an invalid email is provided
+        Test whether the server returns an error when logging in with user that doesn't exists.
         """
         data = {"email": "kbiyewu@gmail.com", "password": "Ilovemymom101"}
         response = self.client.post(UserAPITestCase.login_url, data=data)
@@ -87,10 +87,9 @@ class UserAPITestCase(APITestCase):
             response.json(),
             {"detail": "User not found, please register first."},
         )
-
         # checks if access and refresh tokens are not in the response
         self.assertTrue("access" not in response.json())
-        self.assertTrue("access" not in response.json())
+        self.assertTrue("refresh" not in response.json())
 
     def test_login_with_invalid_password(self):
         """
