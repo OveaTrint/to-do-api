@@ -94,7 +94,7 @@ class UserAPITestCase(APITestCase):
 
     def test_login_with_invalid_password(self):
         """
-        Test whether server authenticates user when an invalid password is provided
+        Test whether a server authenticates a user when an invalid password is provided
         """
         data = {"email": "kbaiyewu@gmail.com", "password": "ilovemymom10"}
         response = self.client.post(UserAPITestCase.login_url, data=data)
